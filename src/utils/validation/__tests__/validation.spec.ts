@@ -5,7 +5,7 @@ interface MockData {
 }
 
 describe('Validation', () => {
-  it('required | result should be false', () => {
+  it('required | result should throw error', () => {
     const data = { title: '' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage = 'Укажите название!';
@@ -18,7 +18,7 @@ describe('Validation', () => {
     expect(isTitleExist).toThrow(errorMessage);
   });
 
-  it('required | result should be true', () => {
+  it('required | result should return true', () => {
     const data = { title: 'title' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage = 'Укажите название!';
@@ -30,7 +30,7 @@ describe('Validation', () => {
     expect(isTitleExist).toBe(true);
   });
 
-  it('required | result should be false again', () => {
+  it('required | result should throw error', () => {
     const data = { title: '  ' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage = 'Укажите название!';
@@ -43,7 +43,7 @@ describe('Validation', () => {
     expect(isTitleExist).toThrow(errorMessage);
   });
 
-  it('length | result should be false (min)', () => {
+  it('length (min) | result should throw error', () => {
     const data = { title: 'title' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage = 'Длина названия должна быть не меньше 6 символов!';
@@ -59,7 +59,7 @@ describe('Validation', () => {
     expect(isTitleLengthCorrect).toThrow(errorMessage);
   });
 
-  it('length | result should be false (max)', () => {
+  it('length (max) | result should return error', () => {
     const data = { title: 'new title' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage = 'Длина названия должна быть не больше 6 символов!';
@@ -75,7 +75,7 @@ describe('Validation', () => {
     expect(isTitleLengthCorrect).toThrow(errorMessage);
   });
 
-  it('length | result should be true', () => {
+  it('length (min & max) | result should return true', () => {
     const data = { title: 'title' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage =
@@ -92,7 +92,7 @@ describe('Validation', () => {
     expect(isTitleLengthCorrect).toBe(true);
   });
 
-  it('required & length | result should be true', () => {
+  it('required & length | result should return  true', () => {
     const data = { title: 'title' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage =
@@ -110,7 +110,7 @@ describe('Validation', () => {
     expect(isTitleLengthCorrect).toBe(true);
   });
 
-  it('required & length | result should be false (required)', () => {
+  it('required & length (required) | result should throw error', () => {
     const data = { title: '' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage =
@@ -130,7 +130,7 @@ describe('Validation', () => {
     expect(isTitleLengthCorrect).toThrowError(requiredErrorMessage);
   });
 
-  it('required & length | result should be false (length)', () => {
+  it('required & length (length) | result should throw error', () => {
     const data = { title: 'name' };
     const dataValidator = new Validation<MockData>(data);
     const errorMessage =
@@ -148,5 +148,95 @@ describe('Validation', () => {
       });
 
     expect(isTitleLengthCorrect).toThrowError(errorMessage);
+  });
+
+  it('validation string (required) | should return true', () => {
+    const mockString = 'test';
+    const isMockStringExist = new Validation<string>(mockString).validateString(
+      { required: 'Укажите строку!' },
+    );
+
+    expect(isMockStringExist).toBe(true);
+  });
+
+  it('validation string (required) | should return error', () => {
+    const mockString = ' ';
+    const errorMessage = 'Укажите строку!';
+    const isMockStringExist = () =>
+      new Validation<string>(mockString).validateString({
+        required: errorMessage,
+      });
+
+    expect(isMockStringExist).toThrow(errorMessage);
+  });
+
+  it('validation string (min) | should return true', () => {
+    const mockString = 'test';
+    const isMockStringLengthCorrect = new Validation<string>(
+      mockString,
+    ).validateString({
+      length: { min: 3 },
+    });
+
+    expect(isMockStringLengthCorrect).toBe(true);
+  });
+
+  it('validation string (min) | should return error', () => {
+    const mockString = '';
+    const errorMessage = 'Укажите строку, длина которой не меньше 3';
+    const isMockStringLengthCorrect = () =>
+      new Validation<string>(mockString).validateString({
+        length: { min: 3, errorMessage },
+      });
+
+    expect(isMockStringLengthCorrect).toThrow(errorMessage);
+  });
+
+  it('validation string (max) | should return true', () => {
+    const mockString = 'test';
+    const isMockStringLengthCorrect = new Validation<string>(
+      mockString,
+    ).validateString({
+      length: { max: 5 },
+    });
+
+    expect(isMockStringLengthCorrect).toBe(true);
+  });
+
+  it('validation string (max) | should return error', () => {
+    const mockString = 'test';
+    const errorMessage = 'Укажите строку, длина которой не больше 3';
+    const isMockStringLengthCorrect = () =>
+      new Validation<string>(mockString).validateString({
+        length: { max: 3, errorMessage },
+      });
+
+    expect(isMockStringLengthCorrect).toThrow(errorMessage);
+  });
+
+  it('validation string (max) | should return true', () => {
+    const mockString = 'test';
+    const isMockStringLengthCorrect = new Validation<string>(
+      mockString,
+    ).validateString({
+      required: 'Укажите строку',
+      length: { max: 5 },
+    });
+
+    expect(isMockStringLengthCorrect).toBe(true);
+  });
+
+  it('validation string (required & length) | should return error', () => {
+    const mockString = '';
+    const errorMessage =
+      'Укажите строку, длина которой не больше 5 и не меньше 3 символов!';
+    const requiredErrorMessage = 'Укажите строку';
+    const isMockStringLengthCorrect = () =>
+      new Validation<string>(mockString).validateString({
+        required: requiredErrorMessage,
+        length: { min: 3, max: 5, errorMessage },
+      });
+
+    expect(isMockStringLengthCorrect).toThrow(requiredErrorMessage);
   });
 });
