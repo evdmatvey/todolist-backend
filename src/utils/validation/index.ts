@@ -24,12 +24,26 @@ export class Validation<T> {
     return isNotEmpty && isLengthCorrect;
   }
 
+  public validateString(validationRules: ValidationRules) {
+    if (typeof this._data !== 'string')
+      this._throwError('Validation | Переданное значние не является строкой!');
+
+    const isNotEmpty = validationRules.required
+      ? this._checkingForEmptiness(this._data, validationRules.required)
+      : true;
+    const isLengthCorrect = validationRules.length
+      ? this._checkingLength(this._data, validationRules.length)
+      : true;
+
+    return isNotEmpty && isLengthCorrect;
+  }
+
   private _getValueByName<U extends keyof T>(key: U): T[U] {
     return this._data[key];
   }
 
   private _checkingForEmptiness(
-    value: T[keyof T],
+    value: T[keyof T] | string,
     errorMessage: string,
   ): boolean {
     if (typeof value === 'string') {
@@ -40,7 +54,7 @@ export class Validation<T> {
   }
 
   private _checkingLength(
-    value: T[keyof T],
+    value: T[keyof T] | string,
     validationLengthRules: ValidationLengthRules,
   ): boolean {
     if (typeof value !== 'string') {
