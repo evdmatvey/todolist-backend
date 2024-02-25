@@ -1,9 +1,6 @@
-import { TagEntity } from '../entities/tag.entity';
-import {
-  CreateTagCommand,
-  CreateTagUseCase,
-  TagRepositoryPort,
-} from '../ports/';
+import { CreateTagCommand, CreateTagUseCase } from '@/domains/ports/in';
+import { TagRepositoryPort } from '@/domains/ports/out';
+import { TagEntity } from '@/domains/entities';
 
 export class CreateTagService implements CreateTagUseCase {
   constructor(private readonly _tagRepositoryPort: TagRepositoryPort) {}

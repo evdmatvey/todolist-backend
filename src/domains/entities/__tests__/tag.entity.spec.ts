@@ -1,4 +1,4 @@
-import { Colors } from '../../types';
+import { Colors } from '@/domains/types';
 import { TagEntity } from '../tag.entity';
 
 describe('Tag Entity', () => {
