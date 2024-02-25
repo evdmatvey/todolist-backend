@@ -1,7 +1,8 @@
-import { CreateTagCommand, TagRepositoryPort } from '@/domains/ports';
-import { CreateTagService } from '../create-tag.service';
-import { TagEntity } from '@/domains/entities/tag.entity';
+import { CreateTagCommand } from '@/domains/ports/in';
+import { TagRepositoryPort } from '@/domains/ports/out';
+import { TagEntity } from '@/domains/entities';
 import { Colors } from '@/domains/types';
+import { CreateTagService } from '../create-tag.service';
 
 describe('UpdateTagService', () => {
   let tagRepositoryPort: TagRepositoryPort;

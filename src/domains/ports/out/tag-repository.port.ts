@@ -1,4 +1,4 @@
-import { TagEntity } from '@/domains/entities/tag.entity';
+import { TagEntity } from '@/domains/entities';
 
 export interface TagRepositoryPort {
   create(title: string): Promise<TagEntity>;
