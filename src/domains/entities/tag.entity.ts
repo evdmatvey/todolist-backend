@@ -1,10 +1,10 @@
-import { Colors } from '@/domains/types';
+import { Color } from '@/domains/types';
 
 export class TagEntity {
   constructor(
     private readonly _id: string,
     private readonly _title: string,
-    private _color: Colors,
+    private _color: Color,
   ) {}
 
   public getTagData() {
@@ -15,7 +15,7 @@ export class TagEntity {
     return this._title.toLowerCase().includes(searchQuery);
   }
 
-  public updateColor(color: Colors) {
+  public updateColor(color: Color) {
     this._color = color;
   }
 }
