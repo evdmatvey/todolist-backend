@@ -14,9 +14,9 @@ export class TagsRepository implements TagRepositoryPort {
     private _repository: Repository<TagOrmEntity>,
   ) {}
 
-  public async create(title: string): Promise<TagEntity> {
+  public async create(title: string, userId: string): Promise<TagEntity> {
     const color = Colors.generateColor();
-    const tag = await this._repository.save({ title, color });
+    const tag = await this._repository.save({ title, userId, color });
 
     return TagsMapper.mapToDomain(tag);
   }
@@ -24,6 +24,8 @@ export class TagsRepository implements TagRepositoryPort {
   public async loadTagByTitle(title: string): Promise<TagEntity> {
     const fundedTag = await this._repository.findOneBy({ title });
 
-    return TagsMapper.mapToDomain(fundedTag);
+    if (fundedTag !== null) return TagsMapper.mapToDomain(fundedTag);
+
+    return null;
   }
 }

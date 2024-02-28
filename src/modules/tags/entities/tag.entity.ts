@@ -14,6 +14,9 @@ export class TagOrmEntity {
   id: string;
 
   @Column()
+  userId: string;
+
+  @Column()
   title: string;
 
   @Column()
