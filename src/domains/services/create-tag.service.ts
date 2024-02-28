@@ -14,7 +14,10 @@ export class CreateTagService implements CreateTagUseCase {
       if (typeof existingTag !== 'undefined')
         throw new Error('У вас уже есть тег с таким названием!');
 
-      const tag = await this._tagRepositoryPort.create(command.title);
+      const tag = await this._tagRepositoryPort.create(
+        command.title,
+        command.userId,
+      );
 
       return tag;
     } catch (error) {

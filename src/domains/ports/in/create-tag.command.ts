@@ -1,7 +1,10 @@
 import { Validation } from '@/utils/validation';
 
 export class CreateTagCommand {
-  constructor(private readonly _title: string) {
+  constructor(
+    private readonly _title: string,
+    private readonly _userId: string,
+  ) {
     const titleValidator = new Validation<string>(this._title).validateString({
       required: 'Укажите название тега!',
       length: {
@@ -13,5 +16,9 @@ export class CreateTagCommand {
 
   public get title(): string {
     return this._title;
+  }
+
+  public get userId(): string {
+    return this._userId;
   }
 }
