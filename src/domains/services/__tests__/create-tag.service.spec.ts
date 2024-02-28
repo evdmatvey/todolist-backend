@@ -1,14 +1,13 @@
 import { CreateTagCommand } from '@/domains/ports/in';
 import { TagRepositoryPort } from '@/domains/ports/out';
 import { TagEntity } from '@/domains/entities';
-import { Colors } from '@/domains/types';
 import { CreateTagService } from '../create-tag.service';
 
 describe('UpdateTagService', () => {
   let tagRepositoryPort: TagRepositoryPort;
   let createTagService: CreateTagService;
   let tagTitle: string;
-  const tag: TagEntity = new TagEntity('mock-id', 'mock-title', Colors.white);
+  const tag: TagEntity = new TagEntity('mock-id', 'mock-title', '#000000');
 
   beforeEach(() => {
     tagRepositoryPort = {
