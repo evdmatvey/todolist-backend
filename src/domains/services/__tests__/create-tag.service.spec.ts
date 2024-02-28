@@ -7,7 +7,12 @@ describe('UpdateTagService', () => {
   let tagRepositoryPort: TagRepositoryPort;
   let createTagService: CreateTagService;
   let tagTitle: string;
-  const tag: TagEntity = new TagEntity('mock-id', 'mock-title', '#000000');
+  const tag: TagEntity = new TagEntity(
+    'mock-id',
+    'user-id',
+    'mock-title',
+    '#000000',
+  );
 
   beforeEach(() => {
     tagRepositoryPort = {
