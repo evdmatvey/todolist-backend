@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserOrmEntity, UsersModule } from '@/modules/users';
 import { AuthModule } from '@/modules/auth';
+import { TagOrmEntity } from './modules/tags/entities/tag.entity';
+import { TagsModule } from './modules/tags/tags.module';
 
 @Module({
   imports: [
@@ -14,11 +16,12 @@ import { AuthModule } from '@/modules/auth';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [UserOrmEntity],
+      entities: [UserOrmEntity, TagOrmEntity],
       synchronize: true,
     }),
     UsersModule,
     AuthModule,
+    TagsModule,
   ],
   controllers: [],
   providers: [],
