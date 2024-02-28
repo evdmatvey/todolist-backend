@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from '@/modules/users/users.module';
-import { AuthModule } from '@/modules/auth/auth.module';
-import { UserOrmEntity } from './modules/users/entities/user.entity';
+import { UserOrmEntity, UsersModule } from '@/modules/users';
+import { AuthModule } from '@/modules/auth';
 
 @Module({
   imports: [
